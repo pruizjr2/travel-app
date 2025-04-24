@@ -1,0 +1,13 @@
+<!-- client/logout.html -->
+<script src="/js/layout-loader.js"></script>
+<script>
+  injectPage(() => {
+    fetch('/api/auth/logout')
+      .then(() => {
+        document.getElementById('content').innerHTML = `
+          <h2>You have been logged out.</h2>
+          <p><a href="/login">Log in again</a></p>
+        `;
+      });
+  });
+</script>
