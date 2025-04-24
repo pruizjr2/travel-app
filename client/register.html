@@ -35,6 +35,9 @@
       padding: 0.5rem;
       width: 300px;
     }
+    .radio-group {
+      margin: 0.5rem 0;
+    }
     button {
       background-color: #e67e22;
       color: white;
@@ -76,6 +79,15 @@
       <input type="text" name="username" placeholder="Username" required>
       <input type="email" name="email" placeholder="Email" required>
       <input type="password" name="password" placeholder="Password" required>
+      <label>Select Role:</label>
+      <div class="radio-group">
+        <input type="radio" name="role" value="user" id="role-user" checked>
+        <label for="role-user">User</label><br>
+        <input type="radio" name="role" value="admin" id="role-admin">
+        <label for="role-admin">Admin</label><br>
+        <input type="radio" name="role" value="advertiser" id="role-advertiser">
+        <label for="role-advertiser">Advertiser</label>
+      </div>
       <button type="submit">Register</button>
     </form>
     <p id="message"></p>
@@ -95,7 +107,8 @@
       const data = {
         username: formData.get('username'),
         email: formData.get('email'),
-        password: formData.get('password')
+        password: formData.get('password'),
+        role: formData.get('role')
       };
 
       const res = await fetch('/api/auth/register', {

@@ -5,14 +5,14 @@ const router = express.Router();
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
 
   try {
     const existingUser = await User.findOne({ username });
     if (existingUser) return res.status(400).json({ error: 'Username already taken' });
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = new User({ username, email, passwordHash });
+    const user = new User({ username, email, passwordHash, role }); // include role here
     await user.save();
 
     res.status(201).json({ message: 'Registered successfully!' });
@@ -33,14 +33,14 @@ router.post('/login', async (req, res) => {
     const valid = await bcrypt.compare(password, user.passwordHash);
     if (!valid) return res.status(400).json({ error: 'Invalid password' });
 
-    // Store user data in session
     req.session.user = {
       id: user._id,
       username: user.username,
-      email: user.email
+      email: user.email,
+      role: user.role
     };
 
-    res.json({ message: 'Login successful' });
+    res.json({ message: 'Login successful', role: user.role });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Login failed' });

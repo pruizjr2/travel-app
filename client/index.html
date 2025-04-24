@@ -1,13 +1,88 @@
-<!-- client/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Travel App</title>
+  <title>Welcome to TravelMate</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: white;
+    }
+    nav {
+      background-color: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      text-decoration: none;
+      margin: 0 1rem;
+      color: #333;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #e67e22;
+    }
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background-color: #f9f9f9;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin: 1rem auto;
+      max-width: 600px;
+    }
+    .hero a {
+      display: inline-block;
+      margin-top: 2rem;
+      background-color: #e67e22;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .hero a:hover {
+      background-color: #cf6112;
+    }
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to the Travel App</h1>
-  <p><a href="/register">Register</a></p>
-  <p><a href="/login">Login</a></p>
+  <nav>
+    <div>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/places">Places</a>
+      <a href="/itineraries">Itineraries</a>
+      <a href="/reviews">Reviews</a>
+      <a href="/register">Register</a>
+      <a href="/login">Login</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Explore the World with TravelMate</h1>
+    <p>Find your next adventure with personalized travel recommendations and ready-made itineraries tailored for solo travelers, couples, families, and groups.</p>
+    <a href="/register">Get Started</a>
+  </div>
+
+  <footer>
+    &copy; 2025 Travel App. All rights reserved.
+  </footer>
 </body>
 </html>
