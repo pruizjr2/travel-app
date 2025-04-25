@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cityItems = document.querySelectorAll(".city-item");
+        const main = document.querySelector("main");
+
+        cityItems.forEach((item) => {
+            item.addEventListener("click", () => {
+                const cityName = item.querySelector("span").textContent;
+                const citySummary = {
+                    Paris: "Paris is the capital city of France, known for its art, fashion, and the Eiffel Tower.",
+                    Rome: "Rome is the capital of Italy, famous for its ancient ruins like the Colosseum.",
+                    London: "London is the capital of England, known for its history, culture, and landmarks like Big Ben.",
+                    "New York": "New York is a bustling city in the USA, known as the city that never sleeps.",
+                    Tokyo: "Tokyo is the capital of Japan, famous for its modernity, technology, and cherry blossoms."
+                };
+
+                const summaryDiv = document.getElementById("city-summary");
+                if (!summaryDiv) {
+                    const newSummaryDiv = document.createElement("div");
+                    newSummaryDiv.id = "city-summary";
+                    newSummaryDiv.style.marginTop = "20px";
+                    newSummaryDiv.style.fontSize = "1.2rem";
+                    newSummaryDiv.textContent = citySummary[cityName];
+                    main.appendChild(newSummaryDiv);
+                } else {
+                    summaryDiv.textContent = citySummary[cityName];
+                }
+            });
+        });
+    });
+</script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #0078d7;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        .city-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+        }
+        .city-item {
+            position: relative;
+            width: 200px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .city-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .city-item:hover img {
+            transform: scale(1.1);
+        }
+        .city-item span {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>City Page</h1>
+    </header>
+    <nav>
+        <a href="City.html">Cities</a>
+        <a href="Dashboard.html">User Profile</a>
+        <a href="Home.html">Home</a>
+        <a href="Itinerary.html">Itineraries</a>
+        <a href="Login.html">Login</a>
+        <a href="PlaceDetails.html">Place Details</a>
+        <a href="Register.html">Explore</a>
+    </nav>
+    <main>
+        <h2>List of Cities</h2>
+        <ul class="city-list">
+            <li class="city-item">
+                <img src="paris.jpg" alt="Paris">
+                <span>Paris</span>
+            </li>
+            <li class="city-item">
+                <img src="rome.jpg" alt="Rome">
+                <span>Rome</span>
+            </li>
+            <li class="city-item">
+                <img src="london.jpg" alt="London">
+                <span>London</span>
+            </li>
+            <li class="city-item">
+                <img src="newyork.jpg" alt="New York">
+                <span>New York</span>
+            </li>
+            <li class="city-item">
+                <img src="tokyo.jpg" alt="Tokyo">
+                <span>Tokyo</span>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <p>Pablo, Sabina, Ryan</p>
+    </footer>
+</body>
+</html>
