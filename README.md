@@ -1,0 +1,8 @@
+responsibilities:
+
+Ryan:
+
+Pablo:
+
+Sabina:
+
