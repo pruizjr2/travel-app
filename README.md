@@ -1,8 +1,8 @@
 responsibilities:
 
-Ryan:
+Ryan: city Page, home page
 
-Pablo:
+Pablo: dashboard, login, register, reviews
 
-Sabina:
+Sabina: explore, place details
 
