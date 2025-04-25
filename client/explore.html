@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Explore Places</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .search-filters {
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    input[type="text"], select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 200px;
+    }
+
+    .places-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .place-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .place-card:hover {
+      transform: scale(1.03);
+    }
+
+    .place-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .place-card h3 {
+      margin: 10px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌍 Explore Places</h1>
+
+  <div class="search-filters">
+    <input type="text" id="searchInput" placeholder="Search by name..." />
+    <select id="typeFilter">
+      <option value="">All Types</option>
+      <option value="Nature">Nature</option>
+      <option value="Museum">Museum</option>
+      <option value="Restaurant">Restaurant</option>
+    </select>
+    <select id="cityFilter">
+      <option value="">All Cities</option>
+      <option value="Tucson">Tucson</option>
+      <option value="Phoenix">Phoenix</option>
+      <option value="Sedona">Sedona</option>
+    </select>
+  </div>
+
+  <div class="places-section" id="placesContainer">
+    <!-- Places will appear here dynamically -->
+  </div>
+
+  <script>
+    const places = [
+      {
+        name: "Yosemite National Park",
+        city: "Tucson",
+        type: "Nature",
+        image: "yosemite.png"
+      },
+      {
+        name: "Sedona Red Rocks",
+        city: "Sedona",
+        type: "Nature",
+        image: "https://source.unsplash.com/400x300/?redrock"
+      },
+      {
+        name: "Arizona Museum of Art",
+        city: "Phoenix",
+        type: "Museum",
+        image: "https://source.unsplash.com/400x300/?museum"
+      },
+      {
+        name: "El Charro Café",
+        city: "Tucson",
+        type: "Restaurant",
+        image: "https://source.unsplash.com/400x300/?restaurant"
+      }
+    ];
+
+    const placesContainer = document.getElementById("placesContainer");
+    const searchInput = document.getElementById("searchInput");
+    const typeFilter = document.getElementById("typeFilter");
+    const cityFilter = document.getElementById("cityFilter");
+
+    function displayPlaces(filteredPlaces) {
+      placesContainer.innerHTML = "";
+      filteredPlaces.forEach(place => {
+        const card = document.createElement("div");
+        card.className = "place-card";
+        card.innerHTML = `
+          <img src="${place.image}" alt="${place.name}" />
+          <h3>${place.name}</h3>
+        `;
+        card.onclick = () => {
+          localStorage.setItem("selectedPlace", JSON.stringify(place));
+          window.location.href = "place-details.html";
+        };
+        placesContainer.appendChild(card);
+      });
+    }
+
+    function filterPlaces() {
+      const search = searchInput.value.toLowerCase();
+      const type = typeFilter.value;
+      const city = cityFilter.value;
+
+      const filtered = places.filter(place => {
+        return (
+          place.name.toLowerCase().includes(search) &&
+          (type === "" || place.type === type) &&
+          (city === "" || place.city === city)
+        );
+      });
+
+      displayPlaces(filtered);
+    }
+
+    searchInput.addEventListener("input", filterPlaces);
+    typeFilter.addEventListener("change", filterPlaces);
+    cityFilter.addEventListener("change", filterPlaces);
+
+    // Initial load
+    displayPlaces(places);
+  </script>
+
+</body>
+</html>
