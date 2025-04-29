@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reviews</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav>
+    <a href="city.html">Cities</a>
+    <a href="dashboard.html">User Profile</a>
+    <a href="home.html">Home</a>
+    <a href="itinerary.html">Itineraries</a>
+    <a href="login.html">Login</a>
+    <a href="place_details.html">Place Details</a>
+    <a href="register.html">Explore</a>
+    <a href="reviews.html">Reviews</a>
+  </nav>
+
+  <main>
+    <h2>Leave a Review</h2>
+    <form id="reviewForm">
+      <input type="text" name="placeName" placeholder="Place Name" required><br><br>
+      <input type="number" name="rating" min="1" max="5" placeholder="Rating (1–5)" required><br><br>
+      <textarea name="comment" rows="4" cols="50" placeholder="Your review..." required></textarea><br><br>
+      <button type="submit">Submit Review</button>
+    </form>
+    <p id="submitMessage"></p>
+
+    <hr>
+
+    <h3>Search Reviews by Place</h3>
+    <input type="text" id="searchInput" placeholder="Enter place name...">
+    <p><em>Tip: Search by main city name only (e.g., Paris, Rome, Tokyo).</em></p>
+    <button id="searchBtn">Search</button>
+    <button id="clearBtn">Clear</button>
+
+    <h2>All Reviews</h2>
+    <div id="reviewList"></div>
+  </main>
+
+  <footer>
+    &copy; 2025 Travel App. All rights reserved.
+  </footer>
+
+  <script>
+    const form = document.getElementById('reviewForm');
+    const message = document.getElementById('submitMessage');
+    const reviewList = document.getElementById('reviewList');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = {
+        placeName: formData.get('placeName'),
+        rating: Number(formData.get('rating')),
+        comment: formData.get('comment')
+      };
+
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        message.textContent = '✅ Review submitted!';
+        form.reset();
+        loadReviews();
+      } else {
+        message.textContent = result.error || '❌ Error submitting review';
+      }
+    });
+
+    async function loadReviews() {
+      const res = await fetch('/api/reviews');
+      const reviews = await res.json();
+
+      reviewList.innerHTML = reviews.map(r => `
+        <div style="border:1px solid #ccc; padding:1rem; margin-bottom:1rem;">
+          <strong>${r.placeName}</strong> <br>
+          ⭐ Rating: ${r.rating}/5 <br>
+          <em>By ${r.username} on ${new Date(r.createdAt).toLocaleDateString()}</em><br>
+          <p>${r.comment}</p>
+        </div>
+      `).join('');
+    }
+
+    async function searchReviews() {
+      const query = document.getElementById('searchInput').value.trim();
+      if (query === '') {
+        loadReviews();
+        return;
+      }
+
+      const res = await fetch(`/api/reviews?place=${encodeURIComponent(query)}`);
+      const reviews = await res.json();
+
+      reviewList.innerHTML = reviews.length > 0 ? reviews.map(r => `
+        <div style="border:1px solid #ccc; padding:1rem; margin-bottom:1rem;">
+          <strong>${r.placeName}</strong> <br>
+          ⭐ Rating: ${r.rating}/5 <br>
+          <em>By ${r.username} on ${new Date(r.createdAt).toLocaleDateString()}</em><br>
+          <p>${r.comment}</p>
+        </div>
+      `).join('') : `<p>No reviews found for "${query}".</p>`;
+    }
+
+    document.getElementById('searchBtn').addEventListener('click', searchReviews);
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      document.getElementById('searchInput').value = '';
+      loadReviews();
+    });
+
+    loadReviews();
+  </script>
+</body>
+</html>

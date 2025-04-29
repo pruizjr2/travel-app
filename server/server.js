@@ -48,8 +48,23 @@ app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dashboard.html'));
 });
 
+// GET /place-details
+app.get('/place-details', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/place_details.html'));
+});
+
+// GET /itinerary
+app.get('/itinerary', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/itinerary.html'));
+});
+
 // API routes
 app.use('/api/auth', require('./routes/auth'));
+
+// Reviews routes
+const reviewRoutes = require('./routes/reviews');
+app.use('/api/reviews', reviewRoutes);
+
 
 app.listen(5000, () => {
   console.log('Server running on http://localhost:5000');
