@@ -14,5 +14,5 @@ Functionalities: Workflows, key features. - Sabina
 
 Modules Overview: User, Admin, Advertiser - Pablo
 
-Style: Design details, motivations, etc. -Ross
+Style: Design details, etc. -Ross
 
