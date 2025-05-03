@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    main {
+      padding: 2rem;
+      background-color: #f4f4f4;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .profile-box {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .profile-box h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .profile-box p {
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>User Profile</h1>
+  </header>
+
+  <nav>
+    <a href="city.html">Cities</a>
+    <a href="#" id="dashboardLink">Dashboard</a>
+    <a href="home.html">Home</a>
+    <a href="Place_Details.html">Saved Places</a>
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="explore.html">Explore</a>
+    <a href="profile.html">Profile</a>
+</nav>
+
+  <main>
+    <div class="profile-box">
+      <h2>Your Info</h2>
+      <p><strong>Username:</strong> <span id="username">Loading...</span></p>
+      <p><strong>Email:</strong> <span id="email">Loading...</span></p>
+      <p><strong>Role:</strong> <span id="role">Loading...</span></p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Travel App. All rights reserved.</p>
+  </footer>
+
+  <script>
+    async function loadUser() {
+      try {
+        const res = await fetch('/api/auth/user');
+        const data = await res.json();
+
+        if (res.ok) {
+          document.getElementById('username').textContent = data.username;
+          document.getElementById('email').textContent = data.email;
+          document.getElementById('role').textContent = data.role;
+        } else {
+          window.location.href = '/login.html';
+        }
+      } catch (err) {
+        console.error(err);
+        window.location.href = '/login.html';
+      }
+    }
+
+    window.onload = loadUser;
+  </script>
+</body>
+</html>
