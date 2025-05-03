@@ -247,67 +247,78 @@
 
 
   <script>
-    function savePlace(placeName) {
-      let saved = JSON.parse(localStorage.getItem("savedPlaces")||"[]");
-      if (!saved.includes(placeName)) {
-        saved.push(placeName);
-        localStorage.setItem("savedPlaces", JSON.stringify(saved));
-        alert(`✅ ${placeName} saved to your list!`);
-      } else {
-        alert(`ℹ️ You already saved ${placeName}.`);
+    async function savePlace(placeName) {
+      try {
+        const res = await fetch('/api/saved-places', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ place: placeName })
+        });
+  
+        const result = await res.json();
+        if (res.ok) {
+          alert(`✅ ${placeName} saved to your list!`);
+          showSavedPlaces();
+        } else {
+          alert(`⚠️ ${result.error || 'Could not save place'}`);
+        }
+      } catch (err) {
+        console.error(err);
+        alert('❌ Server error. Please try again.');
       }
-      showSavedPlaces();
     }
-
-    function showSavedPlaces() {
-      const list = JSON.parse(localStorage.getItem("savedPlaces")||"[]");
-      const container = document.getElementById("savedList");
-      container.innerHTML = "";
-      if (!list.length) {
-        container.innerHTML = "<p>No places saved yet.</p>";
-        return;
+  
+    async function showSavedPlaces() {
+      try {
+        const res = await fetch('/api/saved-places');
+        const places = await res.json();
+  
+        const container = document.getElementById("savedList");
+        container.innerHTML = "";
+  
+        if (!places.length) {
+          container.innerHTML = "<p>No places saved yet.</p>";
+          return;
+        }
+  
+        places.forEach((place) => {
+          const div = document.createElement("div");
+          div.className = "place-item";
+          div.innerHTML = `
+            <span>${place}</span>
+            <button class="remove-btn" onclick="removePlace('${place}')">➖</button>
+          `;
+          container.appendChild(div);
+        });
+      } catch (err) {
+        console.error(err);
+        document.getElementById("savedList").innerHTML = "<p>Error loading places.</p>";
       }
-      list.forEach((pl, i) => {
-        const div = document.createElement("div");
-        div.className = "place-item";
-        div.innerHTML = `<span>${pl}</span>
-                         <button class="remove-btn" onclick="removePlace(${i})">➖</button>`;
-        container.appendChild(div);
-      });
     }
-
-    function removePlace(idx) {
-      let saved = JSON.parse(localStorage.getItem("savedPlaces")||"[]");
-      saved.splice(idx,1);
-      localStorage.setItem("savedPlaces", JSON.stringify(saved));
-      showSavedPlaces();
+  
+    async function removePlace(placeName) {
+      try {
+        await fetch(`/api/saved-places/${encodeURIComponent(placeName)}`, {
+          method: 'DELETE'
+        });
+        showSavedPlaces();
+      } catch (err) {
+        console.error(err);
+        alert('❌ Failed to remove place.');
+      }
     }
-
+  
     window.addEventListener('DOMContentLoaded', () => {
       showSavedPlaces();
+  
+      // Optional: auto-scroll to anchor
       if (location.hash) {
         const sec = document.getElementById(location.hash.slice(1));
         if (sec) sec.scrollIntoView({ behavior: 'smooth' });
       }
     });
-
-    async function syncSavedPlacesToDB() {
-    const savedPlaces = JSON.parse(localStorage.getItem("savedPlaces") || "[]");
-
-    if (savedPlaces.length > 0) {
-      await fetch('/api/saved-places', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ places: savedPlaces })
-      });
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    showSavedPlaces();
-    syncSavedPlacesToDB(); // this sends to the server if logged in
-  });
   </script>
+  
 </body>
 </html>
 
