@@ -6,7 +6,11 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  
+  <header>
+    <h1>Advertiser Dashboard</h1>
+    <p>Welcome, Advertiser! Manage your promotional content below:</p>
+  </header>
+
   <nav>
     <a href="city.html">Cities</a>
     <a href="#" id="dashboardLink">Dashboard</a>
@@ -17,22 +21,91 @@
     <a href="reviews.html">Reviews</a>
     <a href="explore.html">Explore</a>
     <a href="profile.html">Profile</a>
-</nav>
+    <a href="#" id="logoutBtn">Logout</a>
+  </nav>
 
   <main>
-    <h1>Advertiser Dashboard</h1>
-    <p>Welcome, Advertiser! Manage your promotional content below:</p>
-
     <ul>
-      <li><a href="#">Submit New Destination or Attraction</a></li>
-      <li><a href="#">Manage Existing Ads</a></li>
+      <li><a href="#submitForm">Submit New Destination or Attraction</a></li>
+      <li><a href="#manageAds">Manage Existing Ads</a></li>
       <li><a href="#">View Analytics on Ad Views</a></li>
       <li><a href="#">Respond to User Reviews or Questions</a></li>
     </ul>
+
+    <!-- Submit New Destination -->
+    <section id="submitForm" style="margin-top: 2rem;">
+      <h2>Submit a New Destination</h2>
+      <form id="adForm">
+        <input type="text" name="title" placeholder="Destination Name" required><br><br>
+        <textarea name="description" placeholder="Description" rows="4" cols="50" required></textarea><br><br>
+        <input type="url" name="imageUrl" placeholder="Image URL"><br><br>
+        <button type="submit">Submit</button>
+      </form>
+      <p id="adMessage"></p>
+    </section>
+
+    <!-- Manage Ads -->
+    <section id="manageAds" style="margin-top: 3rem;">
+      <h2>Your Submitted Destinations</h2>
+      <div id="adList"></div>
+    </section>
   </main>
 
   <footer>
     <p>&copy; 2025 Travel App. All rights reserved.</p>
   </footer>
+
+  <script src="js/setDashboardLink.js"></script>
+  <script>
+    // Submit new destination handler
+    document.getElementById('adForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const adData = {
+        title: formData.get('title'),
+        description: formData.get('description'),
+        imageUrl: formData.get('imageUrl')
+      };
+
+      const res = await fetch('/api/ads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(adData)
+      });
+
+      const result = await res.json();
+      const message = document.getElementById('adMessage');
+      if (res.ok) {
+        message.textContent = 'Destination submitted!';
+        e.target.reset();
+        loadAds();
+      } else {
+        message.textContent = result.error || 'Submission failed';
+      }
+    });
+
+    // Load advertiser’s existing ads
+    async function loadAds() {
+      const res = await fetch('/api/ads');
+      const ads = await res.json();
+      const list = document.getElementById('adList');
+      list.innerHTML = ads.length > 0 ? ads.map(ad => `
+        <div style="border:1px solid #ccc; padding:1rem; margin-bottom:1rem;">
+          <strong>${ad.title}</strong><br>
+          <img src="${ad.imageUrl}" alt="${ad.title}" style="max-width:200px;"><br>
+          <p>${ad.description}</p>
+          <button onclick="deleteAd('${ad._id}')">🗑 Delete</button>
+        </div>
+      `).join('') : '<p>No ads submitted yet.</p>';
+    }
+
+    async function deleteAd(id) {
+      await fetch(`/api/ads/${id}`, { method: 'DELETE' });
+      loadAds();
+    }
+
+    // Load ads on page load
+    window.addEventListener('DOMContentLoaded', loadAds);
+  </script>
 </body>
 </html>
