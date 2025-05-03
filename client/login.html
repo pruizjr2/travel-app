@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <header>
+    <h1>Sign In/Sign Up</h1>
+  </header>
   <nav>
     <a href="city.html">Cities</a>
     <a href="dashboard.html">User Profile</a>
@@ -13,8 +16,9 @@
     <a href="itinerary.html">Itineraries</a>
     <a href="login.html">Login</a>
     <a href="place_details.html">Place Details</a>
-    <a href="register.html">Explore</a>
+    <a href="register.html">Register</a>
     <a href="reviews.html">Reviews</a>
+    <a href="explore.html">Explore</a>
   </nav>
 
   <div class="container">
@@ -57,11 +61,11 @@
           // Redirect based on role
           const role = result.role;
           if (role === 'admin') {
-            window.location.href = '/admin-dashboard';
+            window.location.href = '/admin-dashboard.html';
           } else if (role === 'advertiser') {
-            window.location.href = '/advertiser-dashboard';
+            window.location.href = '/advertiser-dashboard.html';
           } else {
-            window.location.href = '/dashboard';
+            window.location.href = '/dashboard.html';
           }
         } else {
           message.textContent = result.error || 'Login failed.';

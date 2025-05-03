@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // HTML page routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/index.html'));
+  res.sendFile(path.join(__dirname, '../client/home.html'));
 });
 
 app.get('/register', (req, res) => {
@@ -65,6 +65,8 @@ app.use('/api/auth', require('./routes/auth'));
 const reviewRoutes = require('./routes/reviews');
 app.use('/api/reviews', reviewRoutes);
 
+const savedPlaceRoutes = require('./routes/savedPlaces');
+app.use('/api/saved-places', savedPlaceRoutes);
 
 app.listen(5000, () => {
   console.log('Server running on http://localhost:5000');

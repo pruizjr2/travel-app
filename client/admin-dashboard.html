@@ -3,102 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: white;
-    }
-    nav {
-      background-color: #f5f5f5;
-      border-bottom: 1px solid #ddd;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    nav a {
-      text-decoration: none;
-      margin: 0 1rem;
-      color: #333;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #e67e22;
-    }
-    .container {
-      padding: 2rem;
-    }
-    button {
-      background-color: #e67e22;
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #cf6112;
-    }
-    footer {
-      background-color: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <nav>
-    <div>
-      <a href="/admin-dashboard">Admin Dashboard</a>
-      <a href="/manage-users">Manage Users</a>
-      <a href="/manage-listings">Manage Listings</a>
-    </div>
-    <button id="logoutBtn">Log Out</button>
+    <a href="city.html">Cities</a>
+    <a href="dashboard.html">User Profile</a>
+    <a href="home.html">Home</a>
+    <a href="itinerary.html">Itineraries</a>
+    <a href="login.html">Login</a>
+    <a href="place_details.html">Place Details</a>
+    <a href="register.html">Register</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="explore.html">Explore</a>
   </nav>
 
-  <div class="container">
-    <h2>Welcome, Admin</h2>
-    <p id="adminInfo">Loading your admin panel...</p>
+  <main>
+    <h1>Admin Dashboard</h1>
+    <p>Welcome, Admin! Here are your tools:</p>
+
     <ul>
-      <li>View and manage all registered users</li>
-      <li>Approve or remove advertisers and their listings</li>
-      <li>Moderate user reviews</li>
+      <li><a href="#">View All Users</a></li>
+      <li><a href="#">Delete Inappropriate Reviews</a></li>
+      <li><a href="#">Manage Reported Content</a></li>
+      <li><a href="#">Promote Users to Advertisers</a></li>
     </ul>
-  </div>
+  </main>
 
   <footer>
-    &copy; 2025 Travel App. Admin Control Panel
+    <p>&copy; 2025 Travel App. All rights reserved.</p>
   </footer>
-
-  <script>
-    async function loadAdmin() {
-      try {
-        const res = await fetch('/api/auth/user');
-        const data = await res.json();
-
-        if (res.ok && data.role === 'admin') {
-          document.getElementById('adminInfo').textContent = `Logged in as ${data.username} (${data.email})`;
-        } else {
-          window.location.href = '/login';
-        }
-      } catch (err) {
-        console.error(err);
-        window.location.href = '/login';
-      }
-    }
-
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-      await fetch('/api/auth/logout');
-      window.location.href = '/login';
-    });
-
-    loadAdmin();
-  </script>
 </body>
 </html>

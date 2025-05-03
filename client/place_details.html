@@ -3,99 +3,310 @@
 <head>
   <meta charset="UTF-8" />
   <title>Place Details</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #fff;
+      padding: 20px;
+      height: 100vh;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar h2 { font-size: 18px; margin-bottom: 10px; }
+    .place-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .remove-btn {
+      background-color: #ff4d4d;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .remove-btn:hover { background-color: #cc0000; }
+
+    .main {
+      flex-grow: 1;
+      padding: 30px;
+      overflow-y: auto;
+      height: 100vh;
+    }
+    .banner {
+      width: 100%;
+      height: 300px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+    .info {
+      margin-top: 20px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .save-btn {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .save-btn:hover { background-color: #0056b3; }
+    .review { margin-top: 15px; padding-top: 10px; border-top: 1px solid #ccc; }
+  </style>
 </head>
-
 <body>
-  <nav>
-    <a href="city.html">Cities</a>
-    <a href="dashboard.html">User Profile</a>
-    <a href="home.html">Home</a>
-    <a href="itinerary.html">Itineraries</a>
-    <a href="login.html">Login</a>
-    <a href="place_details.html">Place Details</a>
-    <a href="register.html">Explore</a>
-    <a href="reviews.html">Reviews</a>
-  </nav>
-
   <div class="sidebar">
     <h2>📌 My Saved Places</h2>
     <div id="savedList"></div>
   </div>
 
   <div class="main">
-    <div class="banner"></div>
-
-    <div class="info">
-      <h1>Yosemite National Park</h1>
-      <p><strong>Best time to go:</strong> April to October</p>
-      <p><strong>Entry Fee:</strong> $35 per vehicle</p>
-      <p><strong>Description:</strong> Yosemite is known for its stunning granite cliffs, waterfalls, clear streams, and ancient sequoia trees. Perfect for solo and nature lovers alike!</p>
-
-      <button class="save-btn" onclick="savePlace()">Save to My List</button>
-
-      <div class="review">
-        <h2>Reviews</h2>
-        <p>"Absolutely breathtaking! Will visit again." – Jane</p>
-        <p>"One of the best hiking spots I’ve been to." – Mike</p>
+    <!-- Yosemite -->
+    <section id="yosemite">
+      <div class="banner" style="background-image:url('yosemite_park.webp');"></div>
+      <div class="info">
+        <h1>Yosemite National Park</h1>
+        <p><strong>Best time to go:</strong> April to October</p>
+        <p><strong>Entry Fee:</strong> $35 per vehicle</p>
+        <p><strong>Description:</strong> Yosemite is known for its stunning granite cliffs, waterfalls, clear streams, and ancient sequoia trees.</p>
+        <button class="save-btn" onclick="savePlace('Yosemite National Park')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>Absolutely breathtaking! Will visit again. – Jane</p>
+          <p>One of the best hiking spots I’ve been to. – Mike</p>
+        </div>
       </div>
-    </div>
+    </section>
+    <br>
+    <!-- Sedona -->
+    <section id="sedona">
+      <div class="banner" style="background-image:url('sedona.jpg');"></div>
+      <div class="info">
+        <h1>Sedona Red Rocks</h1>
+        <p><strong>Best time to go:</strong> Year-round</p>
+        <p><strong>Entry Fee:</strong> Free</p>
+        <p><strong>Description:</strong> Vibrant red rock formations and scenic drives ideal for couples and photographers.</p>
+        <button class="save-btn" onclick="savePlace('Sedona Red Rocks')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>A magical place with incredible views. – Amy</p>
+          <p>Perfect getaway for nature lovers. – Sam</p>
+        </div>
+      </div>
+    </section>
+    <br>
+    <!-- Arizona Museum of Art -->
+    <section id="museum">
+      <div class="banner" style="background-image:url('arizona-museum.jpg');"></div>
+      <div class="info">
+        <h1>Arizona Museum of Art</h1>
+        <p><strong>Best time to go:</strong> Anytime</p>
+        <p><strong>Entry Fee:</strong> $12</p>
+        <p><strong>Description:</strong> A rich collection of contemporary and classic art pieces perfect for families and art lovers.</p>
+        <button class="save-btn" onclick="savePlace('Arizona Museum of Art')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>Wonderful exhibits and great layout. – Lisa</p>
+          <p>A must-visit for art enthusiasts. – Tom</p>
+        </div>
+      </div>
+    </section>
+    <br>
+    <!-- El Charro Café -->
+    <section id="charro">
+      <div class="banner" style="background-image:url('El-Charro.jpg');"></div>
+      <div class="info">
+        <h1>El Charro Café</h1>
+        <p><strong>Best time to go:</strong> Lunch or Dinner</p>
+        <p><strong>Entry Fee:</strong> Based on Menu</p>
+        <p><strong>Description:</strong> Tucson's legendary Mexican restaurant loved by locals and travelers alike.</p>
+        <button class="save-btn" onclick="savePlace('El Charro Café')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>The food was amazing! – Ana</p>
+          <p>Authentic and cozy atmosphere. – David</p>
+        </div>
+      </div>
+    </section>
+    <br>
+    <!-- Flagstaff Adventure Park -->
+    <section id="flagstaffAdventure">
+      <div class="banner" style="background-image:url('flagstaff-park.jpg');"></div>
+      <div class="info">
+        <h1>Flagstaff Adventure Park</h1>
+        <p><strong>Best time to go:</strong> Summer</p>
+        <p><strong>Entry Fee:</strong> $20</p>
+        <p><strong>Description:</strong> Thrilling rides and activities for all ages in Flagstaff.</p>
+        <button class="save-btn" onclick="savePlace('Flagstaff Adventure Park')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>Had so much fun with friends! – Chris</p>
+          <p>Great for family outings. – Kelly</p>
+        </div>
+      </div>
+    </section>
+    <br>
+    <!-- Desert Botanical Garden -->
+    <section id="desertGarden">
+      <div class="banner" style="background-image:url('desert-garden.jpg');"></div>
+      <div class="info">
+        <h1>Desert Botanical Garden</h1>
+        <p><strong>Best time to go:</strong> Spring</p>
+        <p><strong>Entry Fee:</strong> $25</p>
+        <p><strong>Description:</strong> Explore desert flora and themed exhibits year-round.</p>
+        <button class="save-btn" onclick="savePlace('Desert Botanical Garden')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>Stunning plant collections. – Alan</p>
+          <p>Peaceful and educational. – Rachel</p>
+        </div>
+      </div>
+    </section>
+    <br>
+    <!-- Sedona Jeep Tour -->
+    <section id="sedonaJeep">
+      <div class="banner" style="background-image:url('sedona-tour.jpg');"></div>
+      <div class="info">
+        <h1>Sedona Jeep Tour</h1>
+        <p><strong>Best time to go:</strong> Morning</p>
+        <p><strong>Entry Fee:</strong> $85 per person</p>
+        <p><strong>Description:</strong> Guided off-road adventure through Sedona’s rugged landscape.</p>
+        <button class="save-btn" onclick="savePlace('Sedona Jeep Tour')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>Thrilling and informative! – Jordan</p>
+          <p>Great guide and beautiful trails. – Casey</p>
+        </div>
+      </div>
+    </section>
+    <br>
+    <!-- Romantic Sunset Hike -->
+    <section id="romanticSunset">
+      <div class="banner" style="background-image:url('sunset-hike.avif');"></div>
+      <div class="info">
+        <h1>Romantic Sunset Hike</h1>
+        <p><strong>Best time to go:</strong> Evening</p>
+        <p><strong>Entry Fee:</strong> Free</p>
+        <p><strong>Description:</strong> A beautiful hike culminating in stunning sunset views.</p>
+        <button class="save-btn" onclick="savePlace('Romantic Sunset Hike')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>Perfect for date night. – Emily</p>
+          <p>Unforgettable views. – Daniel</p>
+        </div>
+      </div>
+    </section>
+    <br>
+    <!-- Children’s Discovery Museum -->
+    <section id="childrenMuseum">
+      <div class="banner" style="background-image:url('discovery.webp');"></div>
+      <div class="info">
+        <h1>Children’s Discovery Museum</h1>
+        <p><strong>Best time to go:</strong> Weekdays</p>
+        <p><strong>Entry Fee:</strong> $8</p>
+        <p><strong>Description:</strong> Interactive exhibits designed for young minds.</p>
+        <button class="save-btn" onclick="savePlace('Children’s Discovery Museum')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>My kids loved it! – Maria</p>
+          <p>So many hands-on activities. – John</p>
+        </div>
+      </div>
+    </section>
+    <br>
+    <!-- Solo Stargazing Spot -->
+    <section id="soloStargazing">
+      <div class="banner" style="background-image:url('stargazing.jpg');"></div>
+      <div class="info">
+        <h1>Solo Stargazing Spot</h1>
+        <p><strong>Best time to go:</strong> Night</p>
+        <p><strong>Entry Fee:</strong> Free</p>
+        <p><strong>Description:</strong> Remote location ideal for clear night sky viewing.</p>
+        <button class="save-btn" onclick="savePlace('Solo Stargazing Spot')">Save to My List</button>
+        <div class="review">
+          <h2>Reviews</h2>
+          <p>Best star views ever. – Lucy</p>
+          <p>Amazing solitude. – Mike</p>
+        </div>
+      </div>
+    </section>
   </div>
 
+
   <script>
-    function savePlace() {
-      const placeName = "Yosemite National Park";
-      let savedPlaces = JSON.parse(localStorage.getItem("savedPlaces") || "[]");
-
-      if (!savedPlaces.includes(placeName)) {
-        savedPlaces.push(placeName);
-        localStorage.setItem("savedPlaces", JSON.stringify(savedPlaces));
-        alert("✅ This place has been saved to your list!");
+    function savePlace(placeName) {
+      let saved = JSON.parse(localStorage.getItem("savedPlaces")||"[]");
+      if (!saved.includes(placeName)) {
+        saved.push(placeName);
+        localStorage.setItem("savedPlaces", JSON.stringify(saved));
+        alert(`✅ ${placeName} saved to your list!`);
       } else {
-        alert("ℹ️ You already saved this place.");
+        alert(`ℹ️ You already saved ${placeName}.`);
       }
-
       showSavedPlaces();
     }
 
     function showSavedPlaces() {
-      const savedPlaces = JSON.parse(localStorage.getItem("savedPlaces") || "[]");
-      const listContainer = document.getElementById("savedList");
-      listContainer.innerHTML = "";
-
-      if (savedPlaces.length === 0) {
-        listContainer.innerHTML = "<p>No places saved yet.</p>";
+      const list = JSON.parse(localStorage.getItem("savedPlaces")||"[]");
+      const container = document.getElementById("savedList");
+      container.innerHTML = "";
+      if (!list.length) {
+        container.innerHTML = "<p>No places saved yet.</p>";
         return;
       }
-
-      savedPlaces.forEach((place, index) => {
-        const item = document.createElement("div");
-        item.className = "place-item";
-
-        const text = document.createElement("span");
-        text.textContent = place;
-
-        const button = document.createElement("button");
-        button.textContent = "➖";
-        button.className = "remove-btn";
-        button.onclick = () => removePlace(index);
-
-        item.appendChild(text);
-        item.appendChild(button);
-        listContainer.appendChild(item);
+      list.forEach((pl, i) => {
+        const div = document.createElement("div");
+        div.className = "place-item";
+        div.innerHTML = `<span>${pl}</span>
+                         <button class="remove-btn" onclick="removePlace(${i})">➖</button>`;
+        container.appendChild(div);
       });
     }
 
-    function removePlace(index) {
-      let savedPlaces = JSON.parse(localStorage.getItem("savedPlaces") || "[]");
-      savedPlaces.splice(index, 1);
-      localStorage.setItem("savedPlaces", JSON.stringify(savedPlaces));
+    function removePlace(idx) {
+      let saved = JSON.parse(localStorage.getItem("savedPlaces")||"[]");
+      saved.splice(idx,1);
+      localStorage.setItem("savedPlaces", JSON.stringify(saved));
       showSavedPlaces();
     }
 
-    // Load saved places when page loads
-    window.onload = showSavedPlaces;
-  </script>
+    window.addEventListener('DOMContentLoaded', () => {
+      showSavedPlaces();
+      if (location.hash) {
+        const sec = document.getElementById(location.hash.slice(1));
+        if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
 
+    async function syncSavedPlacesToDB() {
+    const savedPlaces = JSON.parse(localStorage.getItem("savedPlaces") || "[]");
+
+    if (savedPlaces.length > 0) {
+      await fetch('/api/saved-places', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ places: savedPlaces })
+      });
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    showSavedPlaces();
+    syncSavedPlacesToDB(); // this sends to the server if logged in
+  });
+  </script>
 </body>
 </html>
