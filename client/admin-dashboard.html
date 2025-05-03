@@ -1,36 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    main section {
+      margin-bottom: 2rem;
+    }
+    .review-box {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      margin-top: 0.5rem;
+      padding: 5px 10px;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Admin Dashboard</h1>
+    <p>Welcome, Admin! Here are your tools:</p>
+  </header>
+
   <nav>
-    <a href="City.html">Cities</a>
-    <a href="Dashboard.html">User Profile</a>
-    <a href="Home.html">Home</a>
-    <a href="Login.html">Login</a>
-    <a href="Register.html">Register</a>
-    <a href="place_details.html">Place Details</a>
-    <a href="Explore.html">Explore</a>
-    <a href="Reviews.html">Reviews</a>
+    <a href="city.html">Cities</a>
+    <a href="#" id="dashboardLink">Dashboard</a>
+    <a href="home.html">Home</a>
+    <a href="Place_Details.html">Saved Places</a>
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="explore.html">Explore</a>
+    <a href="profile.html">Profile</a>
+    <a href="#" id="logoutBtn">Logout</a>
   </nav>
 
   <main>
-    <h1>Admin Dashboard</h1>
-    <p>Welcome, Admin! Here are your tools:</p>
-
     <ul>
-      <li><a href="#">View All Users</a></li>
-      <li><a href="#">Delete Inappropriate Reviews</a></li>
-      <li><a href="#">Manage Reported Content</a></li>
-      <li><a href="#">Promote Users to Advertisers</a></li>
+      <li><a href="#users">View All Users</a></li>
+      <li><a href="#reviews">Delete Inappropriate Reviews</a></li>
+      <li><a href="#users">Promote Users to Advertisers</a></li>
     </ul>
+
+    <section id="users">
+      <h2>All Registered Users</h2>
+      <div id="userList"></div>
+    </section>
+
+    <section id="reviews">
+      <h2>All Submitted Reviews</h2>
+      <div id="adminReviews"></div>
+    </section>
   </main>
 
   <footer>
     <p>&copy; 2025 Travel App. All rights reserved.</p>
   </footer>
+
+  <script src="js/setDashboardLink.js"></script>
+  <script>
+    async function loadUsers() {
+      const res = await fetch('/api/admin/users');
+      const users = await res.json();
+      const list = document.getElementById('userList');
+      list.innerHTML = users.map(u => `
+        <p>
+          <strong>${u.username}</strong> (${u.email}) - Role: ${u.role}
+          ${u.role === 'user' ? `<button onclick="promoteUser('${u._id}')">Promote</button>` : ''}
+        </p>
+      `).join('');
+    }
+
+    async function promoteUser(id) {
+      await fetch(`/api/admin/promote/${id}`, { method: 'PUT' });
+      loadUsers();
+    }
+
+    async function loadAllReviews() {
+      const res = await fetch('/api/reviews');
+      const reviews = await res.json();
+      const adminList = document.getElementById('adminReviews');
+      adminList.innerHTML = reviews.map(r => `
+        <div class="review-box">
+          <strong>${r.placeName}</strong> - ⭐ ${r.rating}/5 <br>
+          <p>${r.comment}</p>
+          <em>By ${r.username}</em><br>
+          <button onclick="deleteReview('${r._id}')">🗑 Delete</button>
+        </div>
+      `).join('');
+    }
+
+    async function deleteReview(id) {
+      await fetch(`/api/admin/reviews/${id}`, { method: 'DELETE' });
+      loadAllReviews();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadUsers();
+      loadAllReviews();
+    });
+  </script>
 </body>
 </html>

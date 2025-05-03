@@ -12,7 +12,7 @@ router.post('/register', async (req, res) => {
     if (existingUser) return res.status(400).json({ error: 'Username already taken' });
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = new User({ username, email, passwordHash, role }); // include role here
+    const user = new User({ username, email, passwordHash, role });  // <- make sure `role` is included
     await user.save();
 
     res.status(201).json({ message: 'Registered successfully!' });
@@ -21,6 +21,7 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ error: 'Registration failed' });
   }
 });
+
 
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
