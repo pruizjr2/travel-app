@@ -3,13 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <title>Explore Places</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .search-filters {
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    input[type="text"], select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 200px;
+    }
+
+    .places-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .place-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .place-card:hover {
+      transform: scale(1.03);
+    }
+
+    .place-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .place-card h3 {
+      margin: 10px;
+      font-size: 18px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 10px 10px;
+    }
+
+    .tag {
+      background-color: #e0e0e0;
+      color: #333;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+  </style>
 </head>
 <body>
   <header>
     <h1>Explore</h1>
   </header>
 
+<<<<<<< HEAD
   <nav>
     <a href="city.html">Cities</a>
     <a href="dashboard.html">User Profile</a>
@@ -22,101 +98,90 @@
     <a href="explore.html">Explore</a>
   </nav>
 
+=======
+>>>>>>> 86048a321952a3f1a48a720034eb06c4b235fb5f
   <h1>🌍 Explore Places</h1>
 
   <div class="search-filters">
     <input type="text" id="searchInput" placeholder="Search by name..." />
-    <select id="typeFilter">
-      <option value="">All Types</option>
-      <option value="Nature">Nature</option>
-      <option value="Museum">Museum</option>
-      <option value="Restaurant">Restaurant</option>
+    <select id="categoryFilter">
+      <option value="">All Categories</option>
+      <option value="Solo">Solo</option>
+      <option value="Family">Family</option>
+      <option value="Friends">Friends</option>
+      <option value="Couple">Couple</option>
     </select>
     <select id="cityFilter">
       <option value="">All Cities</option>
       <option value="Tucson">Tucson</option>
       <option value="Phoenix">Phoenix</option>
       <option value="Sedona">Sedona</option>
+      <option value="Flagstaff">Flagstaff</option>
     </select>
   </div>
 
-  <div class="places-section" id="placesContainer">
-    <!-- Places will appear here dynamically -->
-  </div>
+  <div class="places-section" id="placesContainer"></div>
 
   <script>
     const places = [
-      {
-        name: "Yosemite National Park",
-        city: "Tucson",
-        type: "Nature",
-        image: "yosemite.png"
-      },
-      {
-        name: "Sedona Red Rocks",
-        city: "Sedona",
-        type: "Nature",
-        image: "https://source.unsplash.com/400x300/?redrock"
-      },
-      {
-        name: "Arizona Museum of Art",
-        city: "Phoenix",
-        type: "Museum",
-        image: "https://source.unsplash.com/400x300/?museum"
-      },
-      {
-        name: "El Charro Café",
-        city: "Tucson",
-        type: "Restaurant",
-        image: "https://source.unsplash.com/400x300/?restaurant"
-      }
+      { id: "yosemite",          name: "Yosemite National Park",    city: "Tucson",    category: "Solo",    type: "Nature",    image: "yosemite.avif" },
+      { id: "sedona",            name: "Sedona Red Rocks",          city: "Sedona",    category: "Couple",  type: "Nature",    image: "sedona.jpg" },
+      { id: "museum",            name: "Arizona Museum of Art",     city: "Phoenix",   category: "Family",  type: "Museum",    image: "arizona-museum.jpg" },
+      { id: "charro",            name: "El Charro Café",             city: "Tucson",    category: "Friends", type: "Restaurant",image: "El-Charro.jpg" },
+      { id: "flagstaffAdventure",name: "Flagstaff Adventure Park",   city: "Flagstaff", category: "Friends", type: "Amusement", image: "flagstaff-park.jpg" },
+      { id: "desertGarden",      name: "Desert Botanical Garden",    city: "Phoenix",   category: "Solo",    type: "Nature",    image: "desert-garden.jpg" },
+      { id: "sedonaJeep",        name: "Sedona Jeep Tour",           city: "Sedona",    category: "Family",  type: "Activity",  image: "sedona-tour.jpg" },
+      { id: "romanticSunset",    name: "Romantic Sunset Hike",       city: "Tucson",    category: "Couple",  type: "Activity",  image: "sunset-hike.avif" },
+      { id: "childrenMuseum",    name: "Children’s Discovery Museum",city: "Phoenix",   category: "Family",  type: "Museum",    image: "discovery.webp" },
+      { id: "soloStargazing",    name: "Solo Stargazing Spot",       city: "Flagstaff", category: "Solo",    type: "Nature",    image: "stargazing.jpg" },
+      { id: "universalStudios",    name: "Universal Studios Park",city: "Los Angelos",   category: "Family",  type: "Amusement",    image: "Universal-Studios.webp" },
+      { id: "JapaneseGarden",    name: "Japanese Tea Garden",       city: "San-Francisco", category: "Couple",    type: "Nature",    image: "tea-garden.jpg" }
     ];
 
     const placesContainer = document.getElementById("placesContainer");
-    const searchInput = document.getElementById("searchInput");
-    const typeFilter = document.getElementById("typeFilter");
-    const cityFilter = document.getElementById("cityFilter");
+    const searchInput     = document.getElementById("searchInput");
+    const categoryFilter  = document.getElementById("categoryFilter");
+    const cityFilter      = document.getElementById("cityFilter");
 
-    function displayPlaces(filteredPlaces) {
+    function displayPlaces(list) {
       placesContainer.innerHTML = "";
-      filteredPlaces.forEach(place => {
+      list.forEach(place => {
         const card = document.createElement("div");
         card.className = "place-card";
         card.innerHTML = `
           <img src="${place.image}" alt="${place.name}" />
           <h3>${place.name}</h3>
+          <div class="tags">
+            <span class="tag">${place.category}</span>
+            <span class="tag">${place.type}</span>
+          </div>
         `;
-        card.onclick = () => {
-          localStorage.setItem("selectedPlace", JSON.stringify(place));
-          window.location.href = "place-details.html";
-        };
+        card.addEventListener("click", () => {
+          window.location.href = `place_details.html#${place.id}`;
+        });
         placesContainer.appendChild(card);
       });
     }
 
     function filterPlaces() {
-      const search = searchInput.value.toLowerCase();
-      const type = typeFilter.value;
+      const q = searchInput.value.toLowerCase();
+      const cat = categoryFilter.value;
       const city = cityFilter.value;
-
-      const filtered = places.filter(place => {
-        return (
-          place.name.toLowerCase().includes(search) &&
-          (type === "" || place.type === type) &&
-          (city === "" || place.city === city)
-        );
-      });
-
+      const filtered = places.filter(p =>
+        p.name.toLowerCase().includes(q) &&
+        (cat === "" || p.category === cat) &&
+        (city === ""|| p.city === city)
+      );
       displayPlaces(filtered);
     }
 
     searchInput.addEventListener("input", filterPlaces);
-    typeFilter.addEventListener("change", filterPlaces);
+    categoryFilter.addEventListener("change", filterPlaces);
     cityFilter.addEventListener("change", filterPlaces);
 
-    // Initial load
+    // initial render
     displayPlaces(places);
   </script>
-
 </body>
 </html>
+
