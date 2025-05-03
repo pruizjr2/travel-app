@@ -41,12 +41,22 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/dashboard', (req, res) => {
-  // Optional: protect this route with a session check
   if (!req.session.user) {
     return res.redirect('/login');
   }
-  res.sendFile(path.join(__dirname, '../client/dashboard.html'));
+
+  const role = req.session.user.role;
+
+  switch (role) {
+    case 'admin':
+      return res.sendFile(path.join(__dirname, '../client/admin-dashboard.html'));
+    case 'advertiser':
+      return res.sendFile(path.join(__dirname, '../client/advertiser-dashboard.html'));
+    default:
+      return res.sendFile(path.join(__dirname, '../client/dashboard.html')); // user dashboard
+  }
 });
+
 
 // GET /place-details
 app.get('/place_details', (req, res) => {
