@@ -49,7 +49,7 @@ app.get('/dashboard', (req, res) => {
 });
 
 // GET /place-details
-app.get('/place-details', (req, res) => {
+app.get('/place_details', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/place_details.html'));
 });
 
