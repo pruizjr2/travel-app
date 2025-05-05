@@ -95,7 +95,9 @@ Planning a trip is exciting but often overwhelming, requiring time-consuming res
 
 Technical Details: MongoDB, Mongoose, File Structure - Pablo
 
+
 Functionalities: Workflows, key features. - Sabina
+
 -Workflows:
 User Registration and Login
 
