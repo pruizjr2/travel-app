@@ -151,3 +151,6 @@ Modules Overview: User, Admin, Advertiser - Pablo
 
 Style: Design details, etc. -Ross
 
+For the layout of our app, we have a header that is colored blue with white text centered with the name of the page you are on. Underneath the header, we have the nav bar which is colored grey listing the other pages. The Cities, Dashboard, Home, Saved Places, Login, Register, Reviews, Explore and logout pages. The typical background for each page is white with the exception of the home page which has a video playing in the background. This was accomplished by creating a video-background, which set its position, and video-background iframe, which set its width and height. 
+For the city page, we have a list of cities that each have a corresponding image. When you click on a cities image, a brief description of the city will appear at the bottom of the page. This was accomplished by a class called “city-list” and div. Finally at the bottom we have the footer which is also grey.
+
