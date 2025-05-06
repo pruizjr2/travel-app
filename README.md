@@ -154,3 +154,84 @@ Style: Design details, etc. -Ross
 For the layout of our app, we have a header that is colored blue with white text centered with the name of the page you are on. Underneath the header, we have the nav bar which is colored grey listing the other pages. The Cities, Dashboard, Home, Saved Places, Login, Register, Reviews, Explore and logout pages. The typical background for each page is white with the exception of the home page which has a video playing in the background. This was accomplished by creating a video-background, which set its position, and video-background iframe, which set its width and height. 
 For the city page, we have a list of cities that each have a corresponding image. When you click on a cities image, a brief description of the city will appear at the bottom of the page. This was accomplished by a class called “city-list” and div. Finally at the bottom we have the footer which is also grey.
 
+s using full-stack development. The project also enabled us to build role-based interfaces for general users, advertisers, and administrators, providing real-world web functionality and user management challenges.
+
+## Modules Overview
+
+### 1. User Module
+
+* **Functionality**: Register/login, view/save favorite destinations, write/view reviews, and manage personal profile.
+* **Pages**: `dashboard.html`, `place_details.html`, `reviews.html`, `profile.html`
+* **Interactions**: Uses AJAX to fetch and update reviews and saved places stored in MongoDB. Session-based login to access the dashboard and profile pages.
+
+### 2. Advertiser Module
+
+* **Functionality**: Submit new destinations, manage posted ads, and potentially view analytics/respond to reviews.
+* **Pages**: `advertiser-dashboard.html`
+* **Interactions**: Advertisers submit destinations using a form, stored in MongoDB via the `/api/ads` route. AJAX is used for ad management.
+
+### 3. Admin Module
+
+* **Functionality**: View all users, delete inappropriate reviews, and promote users to advertisers.
+* **Pages**: `admin-dashboard.html`
+* **Interactions**: Admin functions fetch users and reviews using AJAX and allow manipulation via protected endpoints under `/api/admin`.
+
+## Functionalities
+
+* **Role-Based Dashboards**: The `/dashboard` endpoint checks the session user’s role and redirects them to the appropriate dashboard (user, admin, or advertiser).
+* **User Account Management**: Users can register with role selection and log in with session-based tracking.
+* **Review System**: Users submit reviews tied to destinations. Admins can moderate and delete inappropriate reviews.
+* **Saved Places**: Users can save and remove destinations from their list. Data is stored and retrieved through MongoDB.
+* **Advertiser Ads**: Advertisers post and delete promotional destinations via form input and interactive lists.
+* **Navigation**: Navbar dynamically adjusts dashboard links based on user role using client-side JavaScript.
+
+## Technical Details
+
+### Technologies Used
+
+* **MongoDB & Mongoose**: MongoDB is used as the database to store users, reviews, and ads. Mongoose is used as the ODM to define schemas for each collection (`User`, `Review`, `Ad`).
+* **JavaScript (Express & AJAX)**:
+
+  * **Express.js**: The backend uses Express to serve static HTML files and expose RESTful API routes.
+  * **AJAX (Fetch API)**: Frontend pages use JavaScript fetch requests for form submission, dynamic data loading (e.g., reviews, saved places, ads), and admin actions.
+* **Node.js**: The application is hosted on a Node.js server.
+* **Session Handling**: Express-session is used to track user sessions post-login and restrict access to certain routes.
+* **File Structure**:
+
+```
+project-root/
+│
+├── client/                # Frontend HTML, CSS, and JS
+│   ├── css/styles.css
+│   ├── js/setDashboardLink.js
+│   ├── *.html (all user-facing pages)
+│
+├── server/                # Backend Express server and routes
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── reviews.js
+│   │   ├── admin.js
+│   │   └── ads.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Review.js
+│   │   └── Ad.js
+│   └── server.js
+│
+├── .env                   # Environment variables
+└── package.json
+```
+
+### Session Management
+
+* Sessions are handled server-side using `express-session`. When users log in, their role and ID are stored in the session and used to protect and route access to user/admin/advertiser dashboards.
+
+### Database Structure (MongoDB Collections)
+
+* **Users**: Stores username, email, password hash, role, saved places, and associated reviews.
+* **Reviews**: Stores `placeName`, `rating`, `comment`, `username`, and `createdAt` timestamp.
+* **Ads**: Stores advertiser-submitted destinations with a title, description, and optional image URL.
+
+This architecture supports role-based access, dynamic content loading, and modular expansion of features.
+
+
